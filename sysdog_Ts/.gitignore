@@ -1,0 +1,6 @@
+*.config
+*.creator
+*.user
+*.includes
+*.files
+sysdog
