@@ -33,6 +33,8 @@ void feed_dog()
 {
     if(_wd_fd != 0)
           write(_wd_fd, ":)", 2);
+    else
+          perror("Error. Feeding dog. (Bad file descriptor)\n");
 }
 
 #endif // WD_TS75XX_H
