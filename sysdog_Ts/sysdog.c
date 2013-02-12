@@ -1,5 +1,5 @@
 // Compile with gcc filename.c -o watchdog
-//#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 
         //Get the file or comand section
         char comand[strlen(exec_cmd)];
-        int cmd_size = strlen(exec_cmd)-1;
+        int cmd_size = strlen(exec_cmd);
         int tmsize;
 
         tmsize = (int)(strstr(exec_cmd," ")-exec_cmd);
@@ -147,10 +147,10 @@ int main(int argc, char **argv)
         printf("Checking comand: '%s'\n",comand);
 
         char cmd[strlen(exec_cmd)+100];
-        sprintf(cmd, "file %s | grep executable &> /dev/null", comand);
+        sprintf(cmd, "file %s | grep executable >/dev/null 2>1", comand);
         int err = system(cmd);
 
-        sprintf(cmd, "file `whereis %s | awk '{print $2}'` | grep executable &> /dev/null", comand);
+        sprintf(cmd, "file `whereis %s | awk '{print $2}'` | grep executable >/dev/null 2>1", comand);
         int err2 = system(cmd);
 
         if((err != 0) && (err2 != 0))
@@ -284,7 +284,7 @@ int main(int argc, char **argv)
 
                 //Check connection
                 char cmd[strlen(check_addr)+50];
-                sprintf(cmd, "ping -c1 -w1 %s &>/dev/null", check_addr);
+                sprintf(cmd, "ping -c1 -w1 %s >/dev/null 2>1", check_addr);
                 int err = system(cmd);
                 if(err != 0)
                     connection_ok = FALSE;
@@ -310,7 +310,7 @@ int main(int argc, char **argv)
 
                 //Check if the process is running
                 char cmd[50];
-                sprintf(cmd, "ps %d &>/dev/null", check_pid);
+                sprintf(cmd, "ps %d >/dev/null 2>1", check_pid);
                 int err = system(cmd);
                 if(err != 0)
                 {
@@ -358,7 +358,7 @@ int main(int argc, char **argv)
                                 else
                                     pid_active = TRUE;
 
-                                printf("Checking process time: tlast:%d / tnow:%d\n",process_time, last_process_time);
+                                printf("Checking process time: tlast:%d / tnow:%d\n", last_process_time, process_time);
 
                                 last_process_time = process_time;
                             }
@@ -421,7 +421,8 @@ int main(int argc, char **argv)
                     fprintf(stdout, msg, fail_time);
                     fprintf(stderr, msg, fail_time);
 
-                    system("reboot");
+                    restarting = TRUE;
+                    system("reboot >/dev/null 2>1");
                 }
 
                 //Stop feeding dog if fail time grater than 'time2StopFeed'
