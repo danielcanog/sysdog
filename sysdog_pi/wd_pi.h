@@ -31,7 +31,8 @@ void enable_wd()
 //feed dog (about 16 seconds)
 void feed_dog()
 {
-    write(_wd_fd, ":)", 2);
+    if(_wd_fd != 0)
+          write(_wd_fd, ":)", 2);
 }
 
 #endif // WD_TS75XX_H
