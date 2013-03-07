@@ -73,6 +73,8 @@ Agregue la siguiente linea en el script '/etc/rc.local'
 *:Y revise si se encontro.
 *:Si no tiene instalado el programa instalelo ejecutando <pre>>sudo apt-get install file</pre>
 
+* Si la direccion con la cual se va a revisar el acceso a la red es una direccion que necesita ''dns'' para ser resuelta (La direccion por default lo es) es de suma importancia que el dispositivo tenga bien configurado el servidor ''dns'', de lo contrario el watchdog por hardware reiniciara el sistema cuando se active (aprox 30 seg despues de iniciado).
+
 ==== Desarrollo ====
 ===== Compilando para nuevos sistemas =====
 
