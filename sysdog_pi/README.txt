@@ -1,24 +1,19 @@
-This file doesn't need to be placed in the TS!!
+== sysdog for raspberry pi ==
 
-This file describes the content, the functionality and the use of the files in this folder.
+==== intro ====
 
-The file netdog.c is the source code of the program 'netdog', the file 'Make' and 'sbus.h' are for compiling and develop purposes.
+look at the main readme file "../README.txt" for information about sysdog.
 
-The file netdog is a executable that is designed to ensure a system be avaiable always and if it is lost, reboot the system.
+== Raspberry pi cautions ==
 
-This program uses the watchdog mechanism to make its work.
+==== enable watchdog module ====
 
-This program recives an argument (number) thet specify if this routine must have a delay before activating the watch dog system.
-This program ensure the right working of the device, and decides when to stopp feeding the watch dog.
+The raspberry pi has a watchdog module implemented, but the system "raspbian" doesn't have it enabled by default, so be suere to have de module enable before running 'sysdog'.
 
-The file 'netdog' must be placed in the system and must be run at the beggining of the system load.
+To enable the module folllow the following actions.
+  >sudo modprobe bcm2708_wdog
+  >sudo nano /etc/modules
+  # Add the line "bcm2708_wdog"
+  # reboot to enable module
 
-For example if the file is in the path '/root/netdog'
-The the following entry must be added to the file "/etc/rc.local" 
-'/root/netdog 30&'
-
-!!! be sure to put the entry before the line "exit 0" !!!
-
-Note:  The watchdog should not be feeded in the programs running over the system, otherwise the system conection wont be warranted
-
-Note2:  This programs version is designed to run in the embeded system 'Ts75xx'
+and you are good to go
